@@ -6,7 +6,13 @@ const morgan = require("morgan");
 const path = require("path");
 
 const app = express();
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+const allowedOrigins = [
+  "https://campus-connect-tjp8.vercel.app",
+  "https://campus-connect-tjp8-git-main-fit-track18.vercel.app",
+  "http://localhost:5173",
+  process.env.CLIENT_URL
+].filter(Boolean);
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json({ limit: "2mb" }));
 app.use(morgan("dev"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
